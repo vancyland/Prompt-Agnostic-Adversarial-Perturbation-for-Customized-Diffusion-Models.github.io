@@ -44,11 +44,14 @@ Details of algorithms and experimental results can be found in [our following pa
 The project page can be found at: https://vancyland.github.io/PAP.github.io/
 
 
-##### Table of contents
-1. [Environment setup](#environment-setup)
-2. [How to run](#how-to-run)
+## 🖋 News
+- Code of PAPv1 released! (12.3)
+- PAP is accepted by nips24!
 
-
+## 🏗️ Todo
+- [ ] Release PAPv1.5
+- [x] Release the PAPv1 code (We have released **the first version** of our code. We welcome any questions or issues you may have and will address them promptly.)
+- [x] Release paper
 
 ## Environment setup
 
