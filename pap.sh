@@ -6,7 +6,7 @@ export OUTPUT_DIR="outputs/$PERSON_DIR"
 export DREAMBOOTH_OUTPUT_DIR="outputs/$PERSON_DIR"
 export CLASS_DIR="data/class-person"
 
-accelerate launch PAP.py \
+accelerate launch attack/papv1.py \
   --pretrained_model_name_or_path=$MODEL_PATH  \
   --enable_xformers_memory_efficient_attention \
   --instance_data_dir_for_train=$CLEAN_ADV_DIR \
