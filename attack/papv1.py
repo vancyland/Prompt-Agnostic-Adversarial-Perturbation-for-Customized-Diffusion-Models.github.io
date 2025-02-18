@@ -440,19 +440,19 @@ def pap_attack(
             loss = loss - F.mse_loss(xtm1_pred, xtm1_target)
         input_pred = encoder_hidden_states
 
-       if step == 0:
+        if step == 0:
             for _ in range(max):
-                 unet.zero_grad()
-                 text_encoder.zero_grad()
-        	 perturbed_images.requires_grad = False
-        	 model_pred = unet(noisy_latents, timesteps, encoder_hidden_states).sample
-        	 tloss = F.mse_loss(model_pred.float(), target.float(), reduction="mean")
-        	 encoder_hidden_states.requires_grad_(True)
-        	 grads = autograd.grad(tloss, encoder_hidden_states)[0].detach().clone()
-       	 	 encoder_hidden_states = encoder_hidden_states - r * grads
-          	 print(f"UPA loss - step {step}, text step {_}, grad down loss: {tloss.detach().item()}")
-       	 	 encoder_hidden_states.grad = None
-        	 encoder_hidden_states.requires_grad_(True)
+                unet.zero_grad()
+                text_encoder.zero_grad()
+                perturbed_images.requires_grad = False
+                model_pred = unet(noisy_latents, timesteps, encoder_hidden_states).sample
+                tloss = F.mse_loss(model_pred.float(), target.float(), reduction="mean")
+                encoder_hidden_states.requires_grad_(True)
+                grads = autograd.grad(tloss, encoder_hidden_states)[0].detach().clone()
+                encoder_hidden_states = encoder_hidden_states - r * grads
+                print(f"UPA loss - step {step}, text step {_}, grad down loss: {tloss.detach().item()}")
+                encoder_hidden_states.grad = None
+                encoder_hidden_states.requires_grad_(True)
 
         diff = input_pred - encoder_hidden_states
         # (encoder_hidden_states - input_pred)·(encoder_hidden_states - input_pred)^T
@@ -624,31 +624,32 @@ def main(args):
     flag = True
 
     for i in range(args.max_train_steps):
-            perturbed_data = pap_attack(
-                args,
-                f,
-                tokenizer,
-                noise_scheduler,
-                vae,
-                perturbed_data,
-                original_data,
-                target_latent_tensor,
-                args.max_adv_train_steps,
-            )
-           if (i + 1) % args.checkpointing_iterations == 0:
-                save_folder = f"{args.output_dir}/noise-ckpt/{i + 1}"
-                os.makedirs(save_folder, exist_ok=True)
-                noised_imgs = perturbed_data.detach()
-                img_names = [
-                    str(instance_path).split("/")[-1]
-                    for instance_path in list(Path(args.instance_data_dir_for_adversarial).iterdir())
-                ]
-                for img_pixel, img_name in zip(noised_imgs, img_names):
-                    save_path = os.path.join(save_folder, f"{i + 1}_noise_{img_name}")
-                    Image.fromarray(
-                        (img_pixel * 127.5 + 128).clamp(0, 255).to(torch.uint8).permute(1, 2, 0).cpu().numpy()
-                    ).save(save_path)
-                print(f"Saved noise at step {i + 1} to {save_folder}")
+        perturbed_data = pap_attack(
+            args,
+            f,
+            tokenizer,
+            noise_scheduler,
+            vae,
+            perturbed_data,
+            original_data,
+            target_latent_tensor,
+            args.max_adv_train_steps,
+        )
+        if (i + 1) % args.checkpointing_iterations == 0:
+            save_folder = f"{args.output_dir}/noise-ckpt/{i + 1}"
+            os.makedirs(save_folder, exist_ok=True)
+            noised_imgs = perturbed_data.detach()
+            img_names = [
+                str(instance_path).split("/")[-1]
+                for instance_path in list(Path(args.instance_data_dir_for_adversarial).iterdir())
+            ]
+            for img_pixel, img_name in zip(noised_imgs, img_names):
+                save_path = os.path.join(save_folder, f"{i + 1}_noise_{img_name}")
+                Image.fromarray(
+                    (img_pixel * 127.5 + 128).clamp(0, 255).to(torch.uint8).permute(1, 2, 0).cpu().numpy()
+                ).save(save_path)
+            print(f"Saved noise at step {i + 1} to {save_folder}")
+
         print(f"EPOCH {i + 1} .................................................................")
 
 if __name__ == "__main__":
