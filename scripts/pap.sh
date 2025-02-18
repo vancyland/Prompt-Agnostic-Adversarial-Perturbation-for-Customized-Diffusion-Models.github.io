@@ -25,7 +25,7 @@ accelerate launch attack/papv1.py \
   --train_batch_size=4 \
   --max_train_steps=5 \
   --max_adv_train_steps=10 \
-  --checkpointing_iterations=10 \
+  --checkpointing_iterations=4 \
   --learning_rate=5e-7 \
   --pgd_alpha=5e-3 \
   --pgd_eps=5e-2 \
