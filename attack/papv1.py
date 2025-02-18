@@ -246,7 +246,7 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--max_train_steps",
         type=int,
-        default=20,
+        default=5,
         help="Total number of training steps to perform.",
     )
     parser.add_argument(
