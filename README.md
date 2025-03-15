@@ -84,7 +84,7 @@ Please put them in `./stable-diffusion/`.
 
 To defense Stable Diffusion version 1.5 (default) with PAP, you can run
 ```bash
-bash scripts/PAP.sh
+bash scripts/pap.sh
 ```
 
 Inference: generates examples with multiple-prompts
