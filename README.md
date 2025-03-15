@@ -11,7 +11,6 @@
   <a href="https://scholar.google.com.hk/citations?hl=zh-CN&user=DnNdGckAAAAJ" target="_blank">Xiang Song</a> &emsp;
   <a href="https://scholar.google.com.hk/citations?user=x2xdU7gAAAAJ&hl=zh-CN" target="_blank">Yihong Gong</a>
   <br> <br>
-  
   <a > Xi'an Jiaotong University</a>
 </div>
 <br>
@@ -62,10 +61,12 @@ Install dependencies:
 cd PAP
 conda create -n PAP python=3.9  
 conda activate PAP  
-pip install -r requirements.txt  
+pip install -r requirements.txt
+pip install modelscope
+python -c "from modelscope.hub.snapshot_download import snapshot_download; snapshot_download('AI-ModelScope/stable-diffusion-v1-5', cache_dir='./stable-diffusion/stable-diffusion-v1-5', local_dir='./stable-diffusion/stable-diffusion-v1-5')"
 ```
 
-Pretrained checkpoints of Stable Diffusion versions can be **downloaded** from provided links in the table below:
+Pretrained checkpoints of Stable Diffusion versions can also be **downloaded** from provided links manually in the table below:
 <table style="width:100%">
   <tr>
     <th>Version</th>
