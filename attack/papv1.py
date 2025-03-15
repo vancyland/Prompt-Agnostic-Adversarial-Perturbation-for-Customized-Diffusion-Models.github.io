@@ -404,6 +404,7 @@ def pap_attack(
 
     alpha = 1/255
     r = 0.001
+    max = 20 # to be updated
     eps = args.pgd_eps
     for step in range(num_steps):
         perturbed_images.requires_grad = True
