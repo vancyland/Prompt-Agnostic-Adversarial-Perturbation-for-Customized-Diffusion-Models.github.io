@@ -1,8 +1,7 @@
-
 export MODEL_PATH="./stable-diffusion/stable-diffusion-v1-5"
 
-export PERSON_DIR="data/n000050"
-export CLEAN_ADV_DIR="$PERSON_DIR/set_B"
+export PERSON_DIR="example"
+export CLEAN_ADV_DIR="$PERSON_DIR"
 export OUTPUT_DIR="outputs/$PERSON_DIR"
 export DREAMBOOTH_OUTPUT_DIR="outputs/$PERSON_DIR"
 export CLASS_DIR="data/class-person"
@@ -25,7 +24,7 @@ accelerate launch attack/papv1.py \
   --train_batch_size=4 \
   --max_train_steps=5 \
   --max_adv_train_steps=10 \
-  --checkpointing_iterations=4 \
+  --checkpointing_iterations=10 \
   --learning_rate=5e-7 \
   --pgd_alpha=5e-3 \
   --pgd_eps=5e-2 \
